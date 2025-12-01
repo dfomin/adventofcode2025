@@ -6,4 +6,9 @@ fn main() {
         day,
         adventofcode2025::day1::part1(&input)
     );
+    println!(
+        "Day {} part 2: {}",
+        day,
+        adventofcode2025::day1::part2(&input)
+    );
 }
