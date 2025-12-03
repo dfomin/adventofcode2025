@@ -24,4 +24,17 @@ fn main() {
         day,
         adventofcode2025::day2::part2(&input)
     );
+
+    day = 3;
+    let input = adventofcode2025::read_input(day);
+    println!(
+        "Day {} part 1: {}",
+        day,
+        adventofcode2025::day3::part1(&input)
+    );
+    println!(
+        "Day {} part 2: {}",
+        day,
+        adventofcode2025::day3::part2(&input)
+    );
 }
