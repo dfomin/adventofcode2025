@@ -26,6 +26,7 @@ pub fn part1(input: &str) -> i64 {
     }
     result
 }
+
 pub fn part2(input: &str) -> i64 {
     let points: Vec<Vec<i64>> = input
         .lines()
