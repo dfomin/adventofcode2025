@@ -141,4 +141,17 @@ fn main() {
         day,
         adventofcode2025::day11::part2(&input)
     );
+
+    day = 12;
+    let input = adventofcode2025::read_input(day);
+    println!(
+        "Day {} part 1: {}",
+        day,
+        adventofcode2025::day12::part1(&input)
+    );
+    println!(
+        "Day {} part 2: {}",
+        day,
+        adventofcode2025::day12::part2(&input)
+    );
 }
