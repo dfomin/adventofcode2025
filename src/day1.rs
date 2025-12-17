@@ -1,71 +1,50 @@
-use crate::Day;
+pub fn part1(input: &str) -> i64 {
+    let lines = input.lines().map(|line| line.trim());
+    let mut value = 50;
+    let mut result = 0;
+    for line in lines {
+        if line.as_bytes()[0] == b'L' {
+            value = (value - line[1..].parse::<i64>().unwrap()).rem_euclid(100);
+        } else {
+            value = (value + line[1..].parse::<i64>().unwrap()).rem_euclid(100);
+        }
 
-pub struct Day1 {
-    lines: Vec<String>,
-}
-
-impl Day for Day1 {
-    fn new(input: &str) -> Self {
-        Self {
-            lines: input
-                .lines()
-                .map(|line| line.trim().to_string())
-                .collect::<Vec<_>>(),
+        if value == 0 {
+            result += 1;
         }
     }
+    result
+}
 
-    fn part1(&self) -> i64 {
-        self.lines
-            .iter()
-            .fold((50, 0), |acc, line| {
-                let mut value = acc.0;
-                if line.as_bytes()[0] == b'L' {
-                    value = (value - line[1..].parse::<i64>().unwrap()).rem_euclid(100);
+pub fn part2(input: &str) -> i64 {
+    let lines = input.lines().map(|line| line.trim());
+    let mut value = 50;
+    let mut result = 0;
+    for line in lines {
+        let rotation = line[1..].parse::<i64>().unwrap();
+        if line.as_bytes()[0] == b'L' {
+            if rotation >= value {
+                if value > 0 {
+                    result += 1;
+                    result += (rotation - value) / 100;
                 } else {
-                    value = (value + line[1..].parse::<i64>().unwrap()).rem_euclid(100);
+                    result += rotation / 100;
                 }
-
-                if value == 0 {
-                    (value, acc.1 + 1)
+            }
+            value = (value - rotation).rem_euclid(100);
+        } else {
+            if rotation >= 100 - value {
+                if value > 0 {
+                    result += 1;
+                    result += (rotation - (100 - value)) / 100;
                 } else {
-                    (value, acc.1)
+                    result += rotation / 100;
                 }
-            })
-            .1
+            }
+            value = (value + rotation).rem_euclid(100);
+        }
     }
-
-    fn part2(&self) -> i64 {
-        self.lines
-            .iter()
-            .fold((50, 0), |acc, line| {
-                let rotation = line[1..].parse::<i64>().unwrap();
-                let mut value = acc.0;
-                let mut result = acc.1;
-                if line.as_bytes()[0] == b'L' {
-                    if rotation >= value {
-                        if value > 0 {
-                            result += 1;
-                            result += (rotation - value) / 100;
-                        } else {
-                            result += rotation / 100;
-                        }
-                    }
-                    value = (value - rotation).rem_euclid(100);
-                } else {
-                    if rotation >= 100 - value {
-                        if value > 0 {
-                            result += 1;
-                            result += (rotation - (100 - value)) / 100;
-                        } else {
-                            result += rotation / 100;
-                        }
-                    }
-                    value = (value + rotation).rem_euclid(100);
-                }
-                (value, result)
-            })
-            .1
-    }
+    result
 }
 
 #[cfg(test)]
@@ -85,13 +64,11 @@ mod tests {
 
     #[test]
     fn test_day1_part1() {
-        let day = Day1::new(INPUT);
-        assert_eq!(day.part1(), 3);
+        assert_eq!(part1(INPUT), 3);
     }
 
     #[test]
     fn test_day1_part2() {
-        let day = Day1::new(INPUT);
-        assert_eq!(day.part2(), 6);
+        assert_eq!(part2(INPUT), 6);
     }
 }

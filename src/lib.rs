@@ -13,14 +13,6 @@ pub mod day7;
 pub mod day8;
 pub mod day9;
 
-pub trait Day {
-    fn new(input: &str) -> Self;
-
-    fn part1(&self) -> i64;
-
-    fn part2(&self) -> i64;
-}
-
 pub fn read_input(day: i32) -> String {
     fs::read_to_string(format!("inputs/day{}.txt", day)).unwrap()
 }
